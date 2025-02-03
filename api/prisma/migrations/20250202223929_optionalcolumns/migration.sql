@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `Imovel` MODIFY `dataCad` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    MODIFY `proprietarioId` INTEGER NULL,
+    MODIFY `corretorId` INTEGER NULL;

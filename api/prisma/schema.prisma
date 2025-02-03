@@ -39,6 +39,131 @@ model User {
   @@map("users")
 }
 
+model Proprietario {
+  id          Int     @id @default(autoincrement())
+
+  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  nome        String  @db.Text()
+  estadoCivil String  @db.Text()
+
+  telefones   Telefone[]
+  registros   Certidao[]
+  imoveis     Imovel[]
+}
+
+model Telefone {
+  id          Int     @id @default(autoincrement())
+
+  numero      String  @db.Text()
+  proprietarioId Int
+  proprietario  Proprietario @relation(fields: [proprietarioId], references: [id], onDelete: Cascade)
+}
+
+model Certidao {
+  id        Int     @id @default(autoincrement())
+
+  numero    String  @unique(map: "numero_UNIQUE") @db.VarChar(100)
+  dataReg   DateTime
+
+  proprietarioId  Int
+  imovelId        Int?
+
+  imovel        Imovel?  @relation()
+  proprietario  Proprietario @relation(fields: [proprietarioId], references: [id], onDelete: Cascade)
+}
+
+model Inquilino {
+  id          Int     @id @default(autoincrement())
+
+  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  nome        String  @db.Text()
+  profissao   String  @db.Text()
+  renda       Float
+
+  visitas     Visita[]
+  propostas   Proposta[]
+  contratos   Contrato[]
+}
+
+model Fiador {
+  id          Int     @id @default(autoincrement())
+
+  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  nome        String  @db.Text()
+  renda       Float
+}
+
+model Corretor {
+  id          Int     @id @default(autoincrement())
+
+  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  nome        String  @db.Text()
+  creci       String  @db.Text()
+  inicio      DateTime @default(now())
+  comissao    Float
+
+  imoveis     Imovel[]
+}
+
+model Imovel {
+  id          Int    @id @default(autoincrement())
+
+  endereco    String @db.Text
+  numComodos  Int
+  vagas       Int
+  area        Int
+  dataCad     DateTime @default(now())
+  aluguel     Float
+
+  proprietarioId  Int?
+  corretorId  Int?
+  certidaoId  Int?  @unique
+
+  proprietario  Proprietario?  @relation(fields: [proprietarioId], references: [id], onDelete: Cascade)
+  corretor      Corretor?      @relation(fields: [corretorId], references: [id], onDelete: Cascade)
+  certidao      Certidao?      @relation(fields: [certidaoId], references: [id])
+  visitas       Visita[]
+  propostas     Proposta[]
+  contratos     Contrato[]
+}
+
+model Visita {
+  id          Int   @id @default(autoincrement())
+
+  dataVisita  DateTime
+  
+  inquilinoId Int
+  imovelId  Int
+
+  inquilino  Inquilino  @relation(fields: [inquilinoId], references: [id], onDelete: Cascade)
+  imovel  Imovel  @relation(fields: [imovelId], references: [id], onDelete: Cascade)
+}
+
+model Proposta {
+  id      Int   @id @default(autoincrement())
+
+  dataProposta  DateTime @default(now())
+  valor Float
+
+  inquilinoId Int
+  imovelId  Int
+
+  inquilino  Inquilino  @relation(fields: [inquilinoId], references: [id], onDelete: Cascade)
+  imovel  Imovel  @relation(fields: [imovelId], references: [id], onDelete: Cascade)
+}
+
+model Contrato {
+  id      Int   @id @default(autoincrement())
+
+  ativo   Boolean @default(true)
+
+  inquilinoId Int
+  imovelId  Int
+
+  inquilino  Inquilino  @relation(fields: [inquilinoId], references: [id], onDelete: Cascade)
+  imovel  Imovel  @relation(fields: [imovelId], references: [id], onDelete: Cascade)
+}
+
 enum Role {
   USER
   ADMIN
