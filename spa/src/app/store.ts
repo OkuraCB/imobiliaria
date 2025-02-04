@@ -1,8 +1,12 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
+import queriesReducer from "../features/home/queriesSlice";
 import userReducer from "../features/users/usersSlice";
 
 export const store = configureStore({
-  reducer: { user: userReducer },
+  reducer: {
+    user: userReducer,
+    queries: queriesReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

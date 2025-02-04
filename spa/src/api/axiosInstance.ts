@@ -3,7 +3,7 @@ import axios from "axios";
 const timeout = 60 * 1000;
 
 export const axiosInstance = axios.create({
-  baseURL: `http://${process.env.REACT_SERVER}:${process.env.REACT_PORT}`,
+  baseURL: `http://localhost:10000/`,
   timeout: timeout,
 });
 

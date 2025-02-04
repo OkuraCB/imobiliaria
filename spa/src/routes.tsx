@@ -21,28 +21,40 @@ export interface Payload {
   name: string;
   email: string;
   role: string;
+  saloonId: number;
 }
 
 export const AppRoutes = () => {
   return (
     <Routes>
       <Route
+        path="/login"
         element={
           <CheckLogin>
             <Login />
           </CheckLogin>
         }
-        path="/"
       />
+
       <Route
+        path="/"
         element={
           <RequireAuth>
             <DefaultLayout />
           </RequireAuth>
         }
       >
-        <Route path="/home" element={<Home />} />
+        <Route index element={<Home />} />
       </Route>
+
+      <Route
+        path="*"
+        element={
+          <RequireAuth>
+            <Navigate to="/" />
+          </RequireAuth>
+        }
+      />
     </Routes>
   );
 };
@@ -78,7 +90,7 @@ const CheckLogin = ({ children }: { children: JSX.Element }) => {
             id: token.sub,
             email: token.email,
             name: token.name,
-            role: "USER",
+            role: token.role,
           })
         );
       } else {
@@ -109,25 +121,25 @@ const RequireAuth = ({ children }: { children: JSX.Element }) => {
   return children;
 };
 
-const RequireAccess = ({
-  children,
-  roles,
-}: {
-  children: JSX.Element;
-  roles: any;
-}) => {
-  const user = useAppSelector(selectUser);
-  const location = useLocation();
-  roles.map((role: any) => {
-    if (user.role !== role)
-      return (
-        <Navigate
-          to={`/unauthorized?redirect=${encodeURIComponent(location.pathname)}`}
-          state={{ from: location }}
-          replace
-        />
-      );
-  });
+// const RequireAccess = ({
+//   children,
+//   roles,
+// }: {
+//   children: JSX.Element;
+//   roles: any;
+// }) => {
+//   const user = useAppSelector(selectUser);
+//   const location = useLocation();
+//   roles.map((role: any) => {
+//     if (user.role !== role)
+//       return (
+//         <Navigate
+//           to={`/unauthorized?redirect=${encodeURIComponent(location.pathname)}`}
+//           state={{ from: location }}
+//           replace
+//         />
+//       );
+//   });
 
-  return children;
-};
+//   return children;
+// };

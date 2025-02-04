@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Card,
   Container,
   Grid,
   LinearProgress,
@@ -36,6 +37,7 @@ export const Login = () => {
           email: decoded.email,
           name: decoded.name,
           role: decoded.role,
+          saloonId: decoded.saloonId,
         })
       );
 
@@ -51,62 +53,64 @@ export const Login = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Box p={4}>
-            <h1 style={{ marginTop: "6px" }}>Login</h1>
-            <h5 style={{ marginBottom: "12px" }}>Login para o template</h5>
-            {loading && (
-              <Box>
-                <LinearProgress />
-              </Box>
-            )}
-            <form noValidate onSubmit={submit}>
-              <TextField
-                margin="normal"
-                required
-                label="Email"
-                autoFocus
-                value={email}
-                variant="outlined"
-                InputLabelProps={{ shrink: true }}
-                placeholder="Seu email"
-                onChange={(event) => setEmail(event.target.value)}
-                disabled={loading}
-              />
-              <br />
-              <TextField
-                margin="normal"
-                required
-                label="Senha"
-                autoFocus
-                value={pass}
-                variant="outlined"
-                InputLabelProps={{ shrink: true }}
-                placeholder="Sua senha"
-                onChange={(event) => setPass(event.target.value)}
-                disabled={loading}
-              />
-              <br />
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                disabled={loading}
-                style={{ marginRight: 43 }}
-              >
-                Entrar
-              </Button>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => navigate("/")}
-                color="secondary"
-              >
-                Voltar
-              </Button>
-            </form>
-          </Box>
+      <Grid container spacing={2} height="100%">
+        <Grid
+          container
+          item
+          xs={12}
+          marginTop={4}
+          alignContent="center"
+          justifyContent="center"
+        >
+          <Card>
+            <Box p={4}>
+              <h1 style={{ marginTop: "6px" }}>Login</h1>
+              <h5 style={{ marginBottom: "12px" }}>Insira suas credenciais</h5>
+              {loading && (
+                <Box>
+                  <LinearProgress />
+                </Box>
+              )}
+              <form noValidate onSubmit={submit}>
+                <TextField
+                  margin="normal"
+                  required
+                  label="Email"
+                  autoFocus
+                  value={email}
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="Seu email"
+                  onChange={(event) => setEmail(event.target.value)}
+                  disabled={loading}
+                />
+                <br />
+                <TextField
+                  margin="normal"
+                  required
+                  label="Senha"
+                  autoFocus
+                  value={pass}
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="Sua senha"
+                  onChange={(event) => setPass(event.target.value)}
+                  disabled={loading}
+                />
+                <br />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  disabled={loading}
+                  style={{ marginRight: 43 }}
+                >
+                  Entrar
+                </Button>
+              </form>
+            </Box>
+          </Card>
         </Grid>
       </Grid>
     </Container>
