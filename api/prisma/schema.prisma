@@ -42,7 +42,7 @@ model User {
 model Proprietario {
   id          Int     @id @default(autoincrement())
 
-  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  cpf         String  @db.Text()
   nome        String  @db.Text()
   estadoCivil String  @db.Text()
 
@@ -75,7 +75,7 @@ model Certidao {
 model Inquilino {
   id          Int     @id @default(autoincrement())
 
-  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  cpf         String  @db.Text()
   nome        String  @db.Text()
   profissao   String  @db.Text()
   renda       Float
@@ -88,7 +88,7 @@ model Inquilino {
 model Fiador {
   id          Int     @id @default(autoincrement())
 
-  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  cpf         String  @db.Text()
   nome        String  @db.Text()
   renda       Float
 }
@@ -96,7 +96,7 @@ model Fiador {
 model Corretor {
   id          Int     @id @default(autoincrement())
 
-  cpf         String  @unique(map: "cpf_UNIQUE") @db.VarChar(16)
+  cpf         String  @db.Text()
   nome        String  @db.Text()
   creci       String  @db.Text()
   inicio      DateTime @default(now())

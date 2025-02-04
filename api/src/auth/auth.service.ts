@@ -43,10 +43,11 @@ export class AuthService {
 
     const payload = {
       sub: find.id,
-      username: find.name,
+      name: find.name,
       email: find.email,
       role: find.role,
     };
+
     const accessToken = await this.jwtService.sign(payload);
 
     const newToken = await this.prisma.token.create({

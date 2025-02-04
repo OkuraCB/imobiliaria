@@ -1,4 +1,5 @@
 import { Expose } from 'class-transformer';
+import { CorretorDto } from './corretor.dto';
 import { ProprietarioDto } from './proprietario.dto';
 import { RegistroDto } from './registro.dto';
 

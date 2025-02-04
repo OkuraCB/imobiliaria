@@ -96,4 +96,58 @@ export class InquilinosController {
       console.log(e);
     }
   }
+
+  @Get('/queries/clientes')
+  async listClientesByProposta() {
+    try {
+      return await this.inquilinoService.listByPropostas();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Get('/queries/imoveis')
+  async listImoveis() {
+    try {
+      return await this.inquilinoService.listImoveis();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Get('/queries/contratos')
+  async listContratosFinalizados() {
+    try {
+      return await this.inquilinoService.listContratosFinalizados();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Get('/queries/corretores')
+  async listCorretores() {
+    try {
+      return await this.inquilinoService.listImovelByCorretor();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Get('/queries/proprietarios')
+  async listProprietarios() {
+    try {
+      return await this.inquilinoService.listProprietarios();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Get('/queries/imoveis/caros')
+  async listCaros() {
+    try {
+      return await this.inquilinoService.listImoveisCaros();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

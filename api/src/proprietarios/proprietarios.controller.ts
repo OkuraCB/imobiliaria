@@ -6,20 +6,21 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { AssignCorretorDto } from './dto/body/assignCorretor.dto';
 import { CreateCertificateDto } from './dto/body/createCertificate.dto';
+import { CreateCorretorDto } from './dto/body/createCorretor.dto';
 import { CreateNumberDto } from './dto/body/createNumber.dto';
 import { CreatePropertyDto } from './dto/body/createProperty.dto';
 import { CreateProprietarioDto } from './dto/body/createProprietario.dto';
 import { UpdateProprietarioDto } from './dto/body/updateProprietario.dto';
+import { ImovelDto } from './dto/expose/imovel.dto';
 import { ProprietarioDto } from './dto/expose/proprietario.dto';
 import { TelefoneDto } from './dto/expose/telefone.dto';
 import { ProprietariosService } from './proprietarios.service';
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller('/proprietario')
 export class ProprietariosController {
   constructor(private proprietarioService: ProprietariosService) {}
@@ -29,6 +30,16 @@ export class ProprietariosController {
   async listAll() {
     try {
       return await this.proprietarioService.list();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Post('/corretor')
+  @Serialize(ProprietarioDto)
+  async addCorretor(@Body() body: CreateCorretorDto) {
+    try {
+      return await this.proprietarioService.createCorretor(body);
     } catch (e) {
       console.log(e);
     }
@@ -95,6 +106,28 @@ export class ProprietariosController {
   async addProperty(@Param('id') id: number, @Body() body: CreatePropertyDto) {
     try {
       return await this.proprietarioService.registerProperty(id, body);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Patch('/corretor/:id')
+  @Serialize(ImovelDto)
+  async assignCorretor(
+    @Param('id') id: number,
+    @Body() body: AssignCorretorDto,
+  ) {
+    try {
+      return await this.proprietarioService.assignCorretor(id, body);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  @Post('/generate')
+  async generateData() {
+    try {
+      return await this.proprietarioService.generateData();
     } catch (e) {
       console.log(e);
     }
