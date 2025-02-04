@@ -1,6 +1,5 @@
 import { Button, Grid } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Pace, WindupChildren } from "windups";
 import { useAppSelector } from "../../app/hooks";
 import homepage from "../../assets/homepage.svg";
@@ -19,7 +18,6 @@ export interface DialogProps {
 
 export const Home = () => {
   const user = useAppSelector(selectUser);
-  const navigate = useNavigate();
 
   const [clientes, setClientes] = useState<boolean>(false);
   const closeClientes = () => {
