@@ -3,7 +3,7 @@ import axios from "axios";
 const timeout = 60 * 1000;
 
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:10000/`,
+  baseURL: `http://arthurtv.duckdns.org:10006/`,
   timeout: timeout,
 });
 
